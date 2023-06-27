@@ -25,16 +25,19 @@
 
         <div class="content text-center">
             <h1 class="text-center fs-1 fs-sm-2 fs-md-3 fs-lg-4">Tool Crawl Data Facebook</h1>
-        </div>
-        <form action="/crawl" method="post">
-            <div
-                class="crawl-container text-center crawl-container text-center flex-column flex-md-row justify-content-center align-items-center">
+            </div>
+
+            <div class="crawl-container text-center crawl-container text-center flex-column flex-md-row justify-content-center align-items-center">
                 <span>Enter Group ID or Page ID: </span>
                 <input id="groupId" class="input mb-3 mb-md-0 me-md-3" type="text">
                 <button onclick="crawlData()" id="btn-crawl" type="button" class="btn btn btn-primary btn-md">Crawl
                     Data</button>
             </div>
-        </form>
+
+			
+            <div class="content-t d-flex justify-content-end">
+                <button  onclick="insertData()" id="btn-insert" class="btn btn-primary">Insert Data</button>
+            </div>
 
         <div id="table-scroll" class="table-wrapper">
             <table class="table table-striped">
