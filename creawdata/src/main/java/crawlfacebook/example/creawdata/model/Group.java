@@ -1,5 +1,9 @@
 package crawlfacebook.example.creawdata.model;
 
+
+
+
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,13 +12,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="data")
-public class Data {
-	@Id
-	private long groupId;
+public class Group {
+	
+	private String groupId;
 
 	private String groupName;
-
-	private long postId;
+	@Id
+	private String postId;
 
 	private String contentText;
 
@@ -23,10 +27,10 @@ public class Data {
 	private String url;
 	
 	private Date time;
-	public Data() {
+	public Group() {
 		// TODO Auto-generated constructor stub
 	}
-	public Data(long groupId, String groupName, long postId, String contentText, String type, String url, Date time) {
+	public Group(String groupId, String groupName, String postId, String contentText, String type, String url, Date time) {
 		super();
 		this.groupId = groupId;
 		this.groupName = groupName;
@@ -36,10 +40,10 @@ public class Data {
 		this.url = url;
 		this.time = time;
 	}
-	public long getGroupId() {
+	public String getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(long groupId) {
+	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
 	public String getGroupName() {
@@ -48,10 +52,10 @@ public class Data {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	public long getPostId() {
+	public String getPostId() {
 		return postId;
 	}
-	public void setPostId(long postId) {
+	public void setPostId(String postId) {
 		this.postId = postId;
 	}
 	public String getContentText() {

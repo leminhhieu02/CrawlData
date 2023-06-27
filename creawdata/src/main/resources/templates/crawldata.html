@@ -8,12 +8,11 @@
 </head>
 
 <body>
-<form action="/crawl" method="post">
-<input name="groupId" type="text">
+
+<input id="groupId" name="groupId" type="text">
 <button onclick="crawlData()">Crawl Data</button>
 
-</form>
 </body>
-
+<script type="text/javascript" th:src="@{/js/crawlGroupFacebook.js}"></script>
 
 </html>
