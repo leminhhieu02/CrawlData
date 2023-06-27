@@ -48,10 +48,15 @@ public class DataController {
 	public ModelAndView index() {
 		return new ModelAndView("index");
 	}
+	@GetMapping(value="/success")
+	public ModelAndView indexx() {
+		return new ModelAndView("success");
+	}
 	
 	@GetMapping(value="/groups/{groupId}")
 	public ResponseEntity<List<Group>> crawlData(@PathVariable("groupId") String groupId, HttpServletRequest request){
-		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token=";
+		String access_token = "";
+		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token="+access_token;
 		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; c_user=100015929474344; "
 				+ "locale=vi_VN; fbl_cs=AhAhRjwRehjAmhuwviZfkCN1GHY5V3lPVkl1PT1UeGV1SVNoYlVZV2tSVQ; "
 				+ "fbl_ci=536242997492011; fbl_st=100420871%3BT%3A28123600; wl_cbv=v2%3Bclient_version%3A2276%3Btimestamp%3A1687416045; "
