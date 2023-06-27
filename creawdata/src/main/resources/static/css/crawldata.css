@@ -5,23 +5,42 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.3;
 }
-#header h1{
-    color: red;
+.image{
+	width: 30%;
+}
+.content h1{
+    color: green;
+    font-weight: bold;
+    font-size: 50px;
 }
 .content{
-    padding-top: 30px;
+    padding-top: 20px;
 }
 .crawl-container{
     padding: 20px;
 }
+.input{
+    border: 4px solid black;
+}
 .crawl-container span{
-    font-size: 30px;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+input:focus {
+  background-color: #73a2b6 !important;
 }
 #btn-crawl{
     background-color: #87CEFA; 
     border: 4px solid black;
     color: black;
-    font-size: 20px;
+    font-size: 15px;
+    display: inline-block;
+    margin-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#btn-crawl:active {
+  background-color: #73a2b6;
+  color: red !important;
 }
 
 .table-wrapper {
@@ -38,6 +57,11 @@ body{
   .table th {
     border: 2px solid #2458c06b !important; 
     
+    
+  }
+  td{
+    word-break: break-word;
+    font-size: 10px !important;
   }
   table.table-striped tbody tr:nth-of-type(odd) {
     background-color: #fff; 
@@ -49,8 +73,46 @@ body{
   thead{
     background-color: rgba(12, 48, 145, 0.618);
   }
+  /* @media only screen and (min-width: 505px) and (max-width: 623px) {
+    #btn-crawl{
+        margin-top: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      border: 5px solid #0a53e4 !important;
+      }
+      
+      table td,
+      table th {
+        border: 2px solid #2458c06b !important; 
+      }
+  } */
+  @media only screen and (max-width: 855px) {
+    .table {
+      border: 5px solid #0a53e4 !important;
+    }
+    .table td,th {
+       font-size: 7px !important;
+    }
+    .content h1{
+      color: green;
+      font-weight: bold;
+      font-size: 7px;
+    }
+    #btn-crawl{
+      font-size: 8px !important;
+    }
+    .crawl-container span{
+      font-size: 15px;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+   }
+   .input{
+    font-size: 10px !important;
+}
+  }
+ 
 
 
-  td[class="textwrap"]{ max-width: 200px; word-wrap: normal;}
+  /* td[class="textwrap"]{ max-width: 200px; word-wrap: normal;}
   td[class="textoverflow"]{text-overflow: ellipsis !important; max-width: 200px; overflow: hidden;}
-  #table-scroll{display: none;}
+  #table-scroll{display: none;} */
