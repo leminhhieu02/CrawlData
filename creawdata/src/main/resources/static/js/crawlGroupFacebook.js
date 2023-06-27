@@ -1,6 +1,31 @@
 
+$(document).ready(function () {
+	// Start the process when the button is clicked
+	// $("#btn-crawl").click(function () {
+	// 	$.get("/startProcess", function (data) {
+	// 		console.log(data);
+	// 	});
+	// });
+	
+
+	// Fetch the progress periodically and update the progress bar
+	setInterval(function () {
+		$.get("/progress", function (data) {
+			$("#progressBar").css("width", data + "%");
+			$("#progressBar").text(data + "%");
+			if(data === 101){
+				document.querySelector("div[class='progress']").style.display="none";
+				document.querySelector('#table-scroll').style.display="contents";
+			}
+		});
+	}, 50);
+});
+
+
+
+
 function crawlData(){
-	let groupId = document.getElementById("groupId").value;
+	let groupId = document.getElementById("groupId").value; 
 	var PostAPI = 'http://localhost:8088/crawl/groups/'+ groupId;
 	var options = {
 		method: 'GET',
@@ -17,6 +42,26 @@ function crawlData(){
 	});
 }
 
+function insertData(){
+	if(confirm("Bạn có muốn thêm kết quả vào cơ sở dữ liệu?")===true){
+		var PostAPI = 'http://localhost:8088/crawl/insertDB';
+		var options = {
+			method: 'GET',
+			headers:{
+				'Content-type': 'application/json'
+			}
+		};
+		fetch(PostAPI, options)
+		.then(function(response){
+			if(response.status===200){
+				alert("Thêm thành công!");
+			}
+			return response.json();
+		})
+		.then(function(response){
+		});
+	}
+}
 
 
 // ----------------------------------------------- get -----------------------------------------------
@@ -187,13 +232,12 @@ function deletePost(id){
 function renderPosts(Posts){
 	var table = document.querySelector('#tbody');
 	var htmls = Posts.map(function(Post){
-		console.log(Post);
 		let ulli = "";
 		if(Post.url !== null ){
 			const urlArray = Post.url.split(";");
 		
 			urlArray.forEach(element => {
-				ulli +=`<li>${element}</li>`;
+				ulli +=`<li><a href="${element}">${element}</a></li>`;
 			});
 		}
 		
@@ -209,6 +253,8 @@ function renderPosts(Posts){
 					<td class="textwrap">${Post.time}</td>
 				</tr>`;
 	});
+	
+	
 	table.innerHTML =htmls.join('');
 	
 }

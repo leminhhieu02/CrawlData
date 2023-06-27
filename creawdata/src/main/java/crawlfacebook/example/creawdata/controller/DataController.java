@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import crawlfacebook.example.creawdata.ProgressService;
 import crawlfacebook.example.creawdata.model.Group;
 import crawlfacebook.example.creawdata.repository.DataRepository;
 import crawlfacebook.example.creawdata.service.DataService;
@@ -41,21 +43,36 @@ public class DataController {
 
 	@Autowired
 	private DataService dataService;
+	
 	@Autowired
 	private DataRepository dataRepository;
+	
+	@Autowired
+    private ProgressService progressService;
 	
 	@GetMapping(value="/")
 	public ModelAndView index() {
 		return new ModelAndView("index");
 	}
+	@GetMapping(value="/success")
+	public ModelAndView indexx() {
+		return new ModelAndView("success");
+	}
 	
 	@GetMapping(value="/groups/{groupId}")
 	public ResponseEntity<List<Group>> crawlData(@PathVariable("groupId") String groupId, HttpServletRequest request){
-		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token=";
-		String cookie="sb=V02AZK0Lx01kPHnbwZwPlGdT; datr=V02AZKyTMKMxEBzlc7PJXjjD; dpr=1.25; locale=vi_VN; wd=1492x739; c_user=100024859335889; xs=49%3ApZf58UL_zoIZ6g%3A2%3A1687845891%3A-1%3A6321; usida=eyJ2ZXIiOjEsImlkIjoiQXJ3d2Z6ZDF2ZXBmbDUiLCJ0aW1lIjoxNjg3ODQ4MTY5fQ%3D%3D; cppo=1; fr=0KZz8kvD1NYyHaSt5.AWXxII01ReWyhfqWUujuLDSXPnI.BkmmDw.NN.AAA.0.0.BkmoT0.AWX8LFHshqo; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1687848318528%2C%22v%22%3A1%7D";
+		String access_token = "";
+		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token="+access_token;
+		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; c_user=100015929474344; "
+				+ "locale=vi_VN; fbl_cs=AhAhRjwRehjAmhuwviZfkCN1GHY5V3lPVkl1PT1UeGV1SVNoYlVZV2tSVQ; "
+				+ "fbl_ci=536242997492011; fbl_st=100420871%3BT%3A28123600; wl_cbv=v2%3Bclient_version%3A2276%3Btimestamp%3A1687416045; "
+				+ "dpr=1.25; cppo=1; xs=12%3A9xvag5LcGz9V0A%3A2%3A1686468057%3A-1%3A6321%3A%3AAcU4_DkYf31r_1nKen0KoQS9EffrC0__wbh0ejkz8wU; "
+				+ "wd=1492x747; fr=05y2owIRNQzsoO8bY.AWWiwEIu2Ftp2AIgWaoixkaNM4Y.BklQLX.LZ.AAA.0.0.BklQcI.AWU0KP1rB-w; "
+				+ "usida=eyJ2ZXIiOjEsImlkIjoiQXJ3b3E5ZWdtM2JnIiwidGltZSI6MTY4NzQ4ODU0MX0%3D; presence=C%7B%22lm3%22%3A%22u.100024859335889%22%2C%22t3%22%3A%5B%7B%22i%22%3A%22u.100030408121274%22%7D%5D%2C%22utc3%22%3A1687489149565%2C%22v%22%3A1%7D";
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("cookie", cookie);
 		System.out.println(url);
+		CompletableFuture.runAsync(() -> progressService.executeLongRunningProcess());
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 		List<Group> listData = new ArrayList<Group>();
@@ -128,9 +145,9 @@ public class DataController {
     public ResponseEntity<List<Group>> insertDB(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		List<Group> myList = (List<Group>) session.getAttribute("listData");
-        //dataService.addData(myList);
+        dataService.addData(myList);
         request.getSession().removeAttribute("listData");
-        return new ResponseEntity<List<Group>>(myList, HttpStatus.FOUND);
+        return new ResponseEntity<List<Group>>(myList, HttpStatus.OK);
     }
 }
 
