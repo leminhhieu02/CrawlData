@@ -1,23 +1,27 @@
 
 $(document).ready(function () {
 	// Start the process when the button is clicked
-	$("#btn-crawl").click(function () {
-		$.get("/startProcess", function (data) {
-			console.log(data);
-		});
-	});
+	// $("#btn-crawl").click(function () {
+	// 	$.get("/startProcess", function (data) {
+	// 		console.log(data);
+	// 	});
+	// });
 
 	// Fetch the progress periodically and update the progress bar
 	setInterval(function () {
 		$.get("/progress", function (data) {
 			$("#progressBar").css("width", data + "%");
 			$("#progressBar").text(data + "%");
+			if(data === 101){
+				document.querySelector("div[class='progress']").style.display="none";
+				document.querySelector('#table-scroll').style.display="contents";
+			}
 		});
 	}, 50);
 });
 
 function crawlData(){
-	let groupId = document.getElementById("groupId").value;
+	let groupId = document.getElementById("groupId").value; 
 	var PostAPI = 'http://localhost:8088/crawl/groups/'+ groupId;
 	var options = {
 		method: 'GET',
@@ -226,7 +230,8 @@ function renderPosts(Posts){
 					<td class="textwrap">${Post.time}</td>
 				</tr>`;
 	});
-	document.querySelector('#table-scroll').style.display="contents";
+	
+	
 	table.innerHTML =htmls.join('');
 	
 }

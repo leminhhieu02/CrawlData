@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import crawlfacebook.example.creawdata.ProgressService;
 import crawlfacebook.example.creawdata.model.Group;
 import crawlfacebook.example.creawdata.repository.DataRepository;
 import crawlfacebook.example.creawdata.service.DataService;
@@ -41,8 +43,12 @@ public class DataController {
 
 	@Autowired
 	private DataService dataService;
+	
 	@Autowired
 	private DataRepository dataRepository;
+	
+	@Autowired
+    private ProgressService progressService;
 	
 	@GetMapping(value="/")
 	public ModelAndView index() {
@@ -55,7 +61,7 @@ public class DataController {
 	
 	@GetMapping(value="/groups/{groupId}")
 	public ResponseEntity<List<Group>> crawlData(@PathVariable("groupId") String groupId, HttpServletRequest request){
-		String access_token = "";
+		String access_token = "EAAGNO4a7r2wBAJjPSGP5vomO0gKL03RlSeF2bZAUrCCrkbURgR5ZCCKcVOfkIDc60SY2mji8Bd4qGOqhuIsuRr1yc53sCUqtvQAnzBAYVTCoFZCKBKRaOfZAvYDwdVI4JWYGakX5vxlJu2r8araksB91ZAWSW8m4wSwNt4AqbomttOqYD1hWeggCih2GdJGUZD";
 		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token="+access_token;
 		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; c_user=100015929474344; "
 				+ "locale=vi_VN; fbl_cs=AhAhRjwRehjAmhuwviZfkCN1GHY5V3lPVkl1PT1UeGV1SVNoYlVZV2tSVQ; "
@@ -66,6 +72,7 @@ public class DataController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("cookie", cookie);
 		System.out.println(url);
+		CompletableFuture.runAsync(() -> progressService.executeLongRunningProcess());
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 		List<Group> listData = new ArrayList<Group>();

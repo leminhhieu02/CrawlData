@@ -22,6 +22,8 @@ public class ProgressService {
             }
         }
         try {
+            Thread.sleep(1000);
+            progress.set(101);
             Thread.sleep(5000);
             progress.set(0);
         } catch (InterruptedException e) {

@@ -114,5 +114,6 @@ input:focus {
 
 
   /* td[class="textwrap"]{ max-width: 200px; word-wrap: normal;}
-  td[class="textoverflow"]{text-overflow: ellipsis !important; max-width: 200px; overflow: hidden;}
-  #table-scroll{display: none;} */
+  td[class="textoverflow"]{text-overflow: ellipsis !important; max-width: 200px; overflow: hidden;} */
+  #table-scroll{display: none; }
+  .progress{max-width: 70%; margin: auto auto;}
