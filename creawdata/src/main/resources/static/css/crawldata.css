@@ -9,9 +9,9 @@ body{
 width: 30%;
 }
 .content h1{
-  color: green;
-  font-weight: bold;
-  font-size: 50px;
+    color: #0066B3;
+    font-weight: bold;
+    font-size: 50px;
 }
 .content{
   padding-top: 20px;
@@ -65,7 +65,7 @@ color: red !important;
 }
 .table thead {
   position: sticky;
-  top: 0;
+  top: -5px;
   bottom: 0;
   box-shadow: 0px 5px 5px -5px rgba(239, 234, 234, 0.5);
 }
@@ -93,7 +93,7 @@ table.table-striped tbody tr:nth-of-type(even) {
   background-color: #73a2b6; 
 }
 thead{
-  background-color: rgba(12, 48, 145, 0.618);
+  background-color: #0066B3; color: white;
 }
 
 /* .expanded {
@@ -110,6 +110,35 @@ thead{
   table {
     border-collapse: collapse;
     border: 5px solid #0a53e4 !important;
+  }
+  .table td,
+  .table th {
+    border: 2px solid #2458c06b !important; 
+    
+    
+  }
+  td{
+    word-break: break-word;
+    font-size: 10px !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 150px;
+    white-space: nowrap;
+  }
+  table.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fff; 
+  }
+  
+  table.table-striped tbody tr:nth-of-type(even) {
+    background-color: #73a2b6; 
+  }
+  thead{
+    background-color: #0066B3;
+    color: white;
+  }
+  /* @media only screen and (min-width: 505px) and (max-width: 623px) {
+    #btn-crawl{
+        margin-top: 10px;
     }
     
     table td,
@@ -147,4 +176,16 @@ thead{
     
   }
  
+
+
+  /* td[class="textwrap"]{ max-width: 200px; word-wrap: normal;} */
+  /* td[class="textoverflow"]{text-overflow: ellipsis !important; max-width: 200px; overflow: hidden; word-break: ; } */
+  #table-scroll{display: none; }
   .progress{max-width: 70%; margin: auto auto;}
+  tr:hover{background-color: var(--background) !important;
+  color: white !important;}
+  :root {
+    --title: #0066B3;
+    --background: #0066B3; 
+  }
+

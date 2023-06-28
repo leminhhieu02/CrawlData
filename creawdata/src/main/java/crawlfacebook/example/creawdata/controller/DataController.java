@@ -54,16 +54,12 @@ public class DataController {
 	public ModelAndView index() {
 		return new ModelAndView("index");
 	}
-	@GetMapping(value="/success")
-	public ModelAndView indexx() {
-		return new ModelAndView("success");
-	}
 	
 	@GetMapping(value="/groups/{groupId}")
 	public ResponseEntity<List<Group>> crawlData(@PathVariable("groupId") String groupId, HttpServletRequest request){
-		String access_token = "EAAGNO4a7r2wBAKgaIuqEgrQbnCSezGgGmthcAjBwwk1Pl4k0YlSgZCotFukZA0bdeHjhv9RrkwJ4XCZAJgkDFIJZBi2tesayUIDKoNB8v1gCfp1G9b1qdwSEZBswCxlBYcW7RiLr0JhYMMjJST9drnDd7qsvEZCK7U36tZCqZAVzSpILHaIJee7ZAgBvXYXR5vfXoXqjLCJaBMgZDZD";
+		String access_token = "";
 		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token="+access_token;
-		String cookie = "sb=V02AZK0Lx01kPHnbwZwPlGdT; datr=V02AZKyTMKMxEBzlc7PJXjjD; dpr=1.25; locale=vi_VN; wd=1492x739; c_user=100024859335889; xs=49%3ApZf58UL_zoIZ6g%3A2%3A1687845891%3A-1%3A6321; usida=eyJ2ZXIiOjEsImlkIjoiQXJ3d2Z6ZDF2ZXBmbDUiLCJ0aW1lIjoxNjg3ODQ4MTY5fQ%3D%3D; cppo=1; fr=0KZz8kvD1NYyHaSt5.AWXxII01ReWyhfqWUujuLDSXPnI.BkmmDw.NN.AAA.0.0.BkmoT0.AWX8LFHshqo; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1687848318528%2C%22v%22%3A1%7D";
+		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; locale=vi_VN; wl_cbv=v2%3Bclient_version%3A2276%3Btimestamp%3A1687416045; dpr=1.25; wd=1492x747; c_user=100015929474344; xs=49%3A36VP6LjaNTE2QA%3A2%3A1687853582%3A-1%3A6321; fr=0ZwAtwgSoKrDP4B99.AWUHkXrQsZUr1FriVcK50wkZMpc.BkmoKl.LZ.AAA.0.0.BkmpoQ.AWUq_g8QAAw; usida=eyJ2ZXIiOjEsImlkIjoiQXJ3d2trdTFyd2FvN2EiLCJ0aW1lIjoxNjg3ODU0MTI2fQ%3D%3D; cppo=1; presence=EDvF3EtimeF1687854136EuserFA21B15929474344A2EstateFDutF0CEchF_7bCC";
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("cookie", cookie);
 		System.out.println(url);
@@ -140,7 +136,7 @@ public class DataController {
     public ResponseEntity<List<Group>> insertDB(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		List<Group> myList = (List<Group>) session.getAttribute("listData");
-        dataService.addData(myList);
+//        dataService.addData(myList);
         request.getSession().removeAttribute("listData");
         return new ResponseEntity<List<Group>>(myList, HttpStatus.OK);
     }
