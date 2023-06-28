@@ -15,7 +15,10 @@ $(document).ready(function () {
 			$("#progressBar").text(data + "%");
 			if(data === 101){
 				document.querySelector("div[class='progress']").style.display="none";
-				document.querySelector('#table-scroll').style.display="contents";
+				document.querySelector('#table-scroll').style.display="block";
+			}else if(data >=1){
+				document.querySelector("div[class='progress']").style.display="";
+				document.querySelector('#table-scroll').style.display="none";
 			}
 		});
 	}, 50);
@@ -235,9 +238,9 @@ function renderPosts(Posts){
 		let ulli = "";
 		if(Post.url !== null ){
 			const urlArray = Post.url.split(";");
-		
+			let count =1;
 			urlArray.forEach(element => {
-				ulli +=`<li><a href="${element}">${element}</a></li>`;
+				ulli +=`<li><a target="_blank" href="${element}">link ${count}</a></li>`; count++;
 			});
 		}
 		
