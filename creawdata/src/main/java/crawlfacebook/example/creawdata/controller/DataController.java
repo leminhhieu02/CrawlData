@@ -57,7 +57,7 @@ public class DataController {
 	
 	@GetMapping(value="/groups/{groupId}")
 	public ResponseEntity<List<Group>> crawlData(@PathVariable("groupId") String groupId, HttpServletRequest request){
-		String access_token = "EAAGNO4a7r2wBAKgaIuqEgrQbnCSezGgGmthcAjBwwk1Pl4k0YlSgZCotFukZA0bdeHjhv9RrkwJ4XCZAJgkDFIJZBi2tesayUIDKoNB8v1gCfp1G9b1qdwSEZBswCxlBYcW7RiLr0JhYMMjJST9drnDd7qsvEZCK7U36tZCqZAVzSpILHaIJee7ZAgBvXYXR5vfXoXqjLCJaBMgZDZD";
+		String access_token = "";
 		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token="+access_token;
 		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; locale=vi_VN; wl_cbv=v2%3Bclient_version%3A2276%3Btimestamp%3A1687416045; dpr=1.25; wd=1492x747; c_user=100015929474344; xs=49%3A36VP6LjaNTE2QA%3A2%3A1687853582%3A-1%3A6321; fr=0ZwAtwgSoKrDP4B99.AWUHkXrQsZUr1FriVcK50wkZMpc.BkmoKl.LZ.AAA.0.0.BkmpoQ.AWUq_g8QAAw; usida=eyJ2ZXIiOjEsImlkIjoiQXJ3d2trdTFyd2FvN2EiLCJ0aW1lIjoxNjg3ODU0MTI2fQ%3D%3D; cppo=1; presence=EDvF3EtimeF1687854136EuserFA21B15929474344A2EstateFDutF0CEchF_7bCC";
 		HttpHeaders headers = new HttpHeaders();

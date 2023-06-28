@@ -65,7 +65,7 @@ color: red !important;
 }
 .table thead {
   position: sticky;
-  top: 0;
+  top: -5px;
   bottom: 0;
   box-shadow: 0px 5px 5px -5px rgba(239, 234, 234, 0.5);
 }
@@ -93,7 +93,7 @@ table.table-striped tbody tr:nth-of-type(even) {
   background-color: #73a2b6; 
 }
 thead{
-  background-color: rgba(12, 48, 145, 0.618);
+  background-color: #0066B3; color: white;
 }
 
 /* .expanded {
