@@ -6,7 +6,6 @@ $(document).ready(function () {
 	// 		console.log(data);
 	// 	});
 	// });
-	
 
 	// Fetch the progress periodically and update the progress bar
 	setInterval(function () {
@@ -15,7 +14,10 @@ $(document).ready(function () {
 			$("#progressBar").text(data + "%");
 			if(data === 101){
 				document.querySelector("div[class='progress']").style.display="none";
-				document.querySelector('#table-scroll').style.display="contents";
+				document.querySelector('#table-scroll').style.display="block";
+			}else if(data >=1){
+				document.querySelector("div[class='progress']").style.display="";
+				document.querySelector('#table-scroll').style.display="none";
 			}
 		});
 	}, 50);
@@ -180,71 +182,74 @@ function getPost(id ,callback){
 // }
 
 
-function updatePost(data, callback){
-	var PostAPI = 'http://localhost:8088/Post';
-	var options = {
-		method: 'PUT',
-		headers:{
-			'Content-type': 'application/json'
-		},
-		body: JSON.stringify(data)
-		// body: data
-	};
+// function updatePost(data, callback){
+// 	var PostAPI = 'http://localhost:8088/Post';
+// 	var options = {
+// 		method: 'PUT',
+// 		headers:{
+// 			'Content-type': 'application/json'
+// 		},
+// 		body: JSON.stringify(data)
+// 		// body: data
+// 	};
 
-	fetch(PostAPI, options)
-	.then(function(response){
-		console.log(response.status);
-		return response.json(); 
-	})
-	.then(callback).catch(function(error) {
-      console.log(error);
-    });
-}
+// 	fetch(PostAPI, options)
+// 	.then(function(response){
+// 		console.log(response.status);
+// 		return response.json(); 
+// 	})
+// 	.then(callback).catch(function(error) {
+//       console.log(error);
+//     });
+// }
 
 
 // ----------------------------------------------- delete -----------------------------------------------
 
 
-function deletePost(id){
-	var PostAPI = 'http://localhost:8088/Post';
-	var options = {
-		method: 'DELETE',
-		headers:{
-			'Content-type': 'application/json'
-		}
-	};
+// function deletePost(id){
+// 	var PostAPI = 'http://localhost:8088/Post';
+// 	var options = {
+// 		method: 'DELETE',
+// 		headers:{
+// 			'Content-type': 'application/json'
+// 		}
+// 	};
 
-	fetch(PostAPI + '/'+id, options)
-	.then(function(response){
-		response.json();
-	})
-	.then(function(){
-		var removeItem = document.querySelector('.Post-item-' +id);
-		if(removeItem){
-			removeItem.remove();
-		}
+// 	fetch(PostAPI + '/'+id, options)
+// 	.then(function(response){
+// 		response.json();
+// 	})
+// 	.then(function(){
+// 		var removeItem = document.querySelector('.Post-item-' +id);
+// 		if(removeItem){
+// 			removeItem.remove();
+// 		}
 		
-	});
-}
+// 	});
+// }
 
 
 // ----------------------------------------------- render -----------------------------------------------
 function renderPosts(Posts){
 	var table = document.querySelector('#tbody');
+	let stt=1;
 	var htmls = Posts.map(function(Post){
 		let ulli = "";
 		if(Post.url !== null ){
 			const urlArray = Post.url.split(";");
-		
+			let count =1;
 			urlArray.forEach(element => {
-				ulli +=`<li><a href="${element}">${element}</a></li>`;
+				ulli +=`<li><a href="${element}" target="_blank">link ${count}</a></li>`;
+				 count++;
 			});
 		}
 		
-		return `<tr>
+		return `<tr onclick="showMore(this)">
+					<td class="textwrap">${stt++}</td>
 					<td class="textwrap">${Post.groupId}</td>
 					<td class="textwrap">${Post.groupName}</td>
-					<td class="textwrap">${Post.postId.split("_")[1]}</td>
+					<td class="textwrap"><a style="text-decoration:none" href="https://www.facebook.com/${Post.postId.replace('_', '/posts/')}" target="_blank">${Post.postId.split("_")[1]}</a></td>
 					<td class="textwrap">${Post.contentText}</td>
 					<td class="textwrap">${Post.type}</td>
 					<td class="textoverflow">
@@ -258,33 +263,47 @@ function renderPosts(Posts){
 	table.innerHTML =htmls.join('');
 	
 }
-
-function renderPost(Post){
-	if(Post !== null){
-		var table = document.querySelector('#Post');
-		table.innerHTML +=`
-				<tr class="Post-item-${Post.PostID}">
-					<td>${Post.address}</td>
-					<td>${Post.PostID}</td>
-					<td>${Post.dateOfBirth}</td>
-					<td>${Post.firstName}</td>
-					<td>${Post.gender}</td>
-					<td>${Post.image}</td>
-					<td>${Post.lastName}</td>
-					<td><button onclick="deletePost(${Post.PostID})" name="delete">Delete</button></td>
-					<td><button onclick="getPostToUpdate(${Post.PostID})" name="update">Update</button></td>
-				</tr>
-			`;	
+function showMore(tr){
+	var tdElements = tr.getElementsByTagName('td');
+	// Loop through each <td> element
+	for (var i = 0; i < tdElements.length; i++) {
+		var tdElement = tdElements[i];
+		var computedStyle = window.getComputedStyle(tdElement);
+		if(computedStyle.whiteSpace === "nowrap"){
+			tdElement.style.whiteSpace  ='normal';
+			tdElement.style.textOverflow  ='';
+		}else{
+			tdElement.style.whiteSpace  ='nowrap';
+			tdElement.style.textOverflow  ='ellipsis';
+		}
 	}
 }
+// function renderPost(Post){
+// 	if(Post !== null){
+// 		var table = document.querySelector('#Post');
+// 		table.innerHTML +=`
+// 				<tr class="Post-item-${Post.PostID}">
+// 					<td>${Post.address}</td>
+// 					<td>${Post.PostID}</td>
+// 					<td>${Post.dateOfBirth}</td>
+// 					<td>${Post.firstName}</td>
+// 					<td>${Post.gender}</td>
+// 					<td>${Post.image}</td>
+// 					<td>${Post.lastName}</td>
+// 					<td><button onclick="deletePost(${Post.PostID})" name="delete">Delete</button></td>
+// 					<td><button onclick="getPostToUpdate(${Post.PostID})" name="update">Update</button></td>
+// 				</tr>
+// 			`;	
+// 	}
+// }
 
-function renderForm(Post){
-	document.querySelector('input[name="PostID"]').value = Post.PostID;
-	document.querySelector('input[name="address"]').value = Post.address;
-	document.querySelector('input[name="dateOfBirth"]').value = Post.dateOfBirth;
-	document.querySelector('input[name="firstName"]').value = Post.firstName;
-	document.querySelector('input[name="image"]').value = Post.image;
-	document.querySelector('input[name="lastName"]').value = Post.lastName;
-	if(Post.gender ===true) 	document.querySelector('input[id="male"]').checked = true;
-	else document.querySelector('input[id="female"]').checked = true;
-}
+// function renderForm(Post){
+// 	document.querySelector('input[name="PostID"]').value = Post.PostID;
+// 	document.querySelector('input[name="address"]').value = Post.address;
+// 	document.querySelector('input[name="dateOfBirth"]').value = Post.dateOfBirth;
+// 	document.querySelector('input[name="firstName"]').value = Post.firstName;
+// 	document.querySelector('input[name="image"]').value = Post.image;
+// 	document.querySelector('input[name="lastName"]').value = Post.lastName;
+// 	if(Post.gender ===true) 	document.querySelector('input[id="male"]').checked = true;
+// 	else document.querySelector('input[id="female"]').checked = true;
+// }

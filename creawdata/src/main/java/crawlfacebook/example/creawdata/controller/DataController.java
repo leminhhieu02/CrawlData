@@ -54,21 +54,12 @@ public class DataController {
 	public ModelAndView index() {
 		return new ModelAndView("index");
 	}
-	@GetMapping(value="/success")
-	public ModelAndView indexx() {
-		return new ModelAndView("success");
-	}
 	
 	@GetMapping(value="/groups/{groupId}")
 	public ResponseEntity<List<Group>> crawlData(@PathVariable("groupId") String groupId, HttpServletRequest request){
 		String access_token = "";
 		String url = "https://graph.facebook.com/v17.0/"+groupId+"?fields=name,id,feed.fields(full_picture,id,message,type,permalink_url,updated_time,attachments.fileds(media)).limit(100)&access_token="+access_token;
-		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; c_user=100015929474344; "
-				+ "locale=vi_VN; fbl_cs=AhAhRjwRehjAmhuwviZfkCN1GHY5V3lPVkl1PT1UeGV1SVNoYlVZV2tSVQ; "
-				+ "fbl_ci=536242997492011; fbl_st=100420871%3BT%3A28123600; wl_cbv=v2%3Bclient_version%3A2276%3Btimestamp%3A1687416045; "
-				+ "dpr=1.25; cppo=1; xs=12%3A9xvag5LcGz9V0A%3A2%3A1686468057%3A-1%3A6321%3A%3AAcU4_DkYf31r_1nKen0KoQS9EffrC0__wbh0ejkz8wU; "
-				+ "wd=1492x747; fr=05y2owIRNQzsoO8bY.AWWiwEIu2Ftp2AIgWaoixkaNM4Y.BklQLX.LZ.AAA.0.0.BklQcI.AWU0KP1rB-w; "
-				+ "usida=eyJ2ZXIiOjEsImlkIjoiQXJ3b3E5ZWdtM2JnIiwidGltZSI6MTY4NzQ4ODU0MX0%3D; presence=C%7B%22lm3%22%3A%22u.100024859335889%22%2C%22t3%22%3A%5B%7B%22i%22%3A%22u.100030408121274%22%7D%5D%2C%22utc3%22%3A1687489149565%2C%22v%22%3A1%7D";
+		String cookie = "datr=v-chYjX_2GoJy_bt45Y1MUk0; sb=v-chYgPMClWhSqPp49ztm7FZ; locale=vi_VN; wl_cbv=v2%3Bclient_version%3A2276%3Btimestamp%3A1687416045; dpr=1.25; wd=1492x747; c_user=100015929474344; xs=49%3A36VP6LjaNTE2QA%3A2%3A1687853582%3A-1%3A6321; fr=0ZwAtwgSoKrDP4B99.AWUHkXrQsZUr1FriVcK50wkZMpc.BkmoKl.LZ.AAA.0.0.BkmpoQ.AWUq_g8QAAw; usida=eyJ2ZXIiOjEsImlkIjoiQXJ3d2trdTFyd2FvN2EiLCJ0aW1lIjoxNjg3ODU0MTI2fQ%3D%3D; cppo=1; presence=EDvF3EtimeF1687854136EuserFA21B15929474344A2EstateFDutF0CEchF_7bCC";
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("cookie", cookie);
 		System.out.println(url);
@@ -145,7 +136,7 @@ public class DataController {
     public ResponseEntity<List<Group>> insertDB(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		List<Group> myList = (List<Group>) session.getAttribute("listData");
-        dataService.addData(myList);
+//        dataService.addData(myList);
         request.getSession().removeAttribute("listData");
         return new ResponseEntity<List<Group>>(myList, HttpStatus.OK);
     }

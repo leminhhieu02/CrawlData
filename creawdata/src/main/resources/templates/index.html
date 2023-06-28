@@ -24,18 +24,13 @@
         </div>
 
         <div class="content text-center">
-            <h1 class="text-center fs-1 fs-sm-2 fs-md-3 fs-lg-4">Tool Crawl Data Facebook</h1>
+            <h1 class="text-center fs-1 fs-sm-2 fs-md-3 fs-lg-4">Facebook Data crawling tool</h1>
             </div>
 
             <div class="crawl-container text-center crawl-container text-center flex-column flex-md-row justify-content-center align-items-center">
                 <span>Enter Group ID or Page ID: </span>
                 <input id="groupId" class="input mb-3 mb-md-0 me-md-3" type="text">
-                <button onclick="crawlData()" id="btn-crawl" type="button" class="btn btn btn-primary btn-md">Crawl
-                    Data</button>
-            </div>
-
-			
-            <div class="content-t d-flex justify-content-end">
+                <button onclick="crawlData()" id="btn-crawl" type="button" class="btn btn btn-primary btn-md">Crawl Data</button>
                 <button  onclick="insertData()" id="btn-insert" class="btn btn-primary">Insert Data</button>
             </div>
 
@@ -43,12 +38,13 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th scope="col">STT</th>
                         <th scope="col">Group ID</th>
                         <th scope="col">Group Name</th>
                         <th scope="col">Post ID</th>
                         <th scope="col">Content Text</th>
                         <th scope="col">Type</th>
-                        <th scope="col">URL</th>
+                        <th scope="col">Attchments</th>
                         <th scope="col">Update Time</th>
                     </tr>
                 </thead>
@@ -61,7 +57,7 @@
             <div id="progressBar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
               0%
             </div>
-          </div>
+        </div>
     </div>
 </body>
 
